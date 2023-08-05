@@ -38,7 +38,7 @@ func removeAll(path string) error {
 	}
 
 	// os.RemoveAll behaves differently in windows.
-	// http://golang.org/issues/9606
+	// https://github.com/golang/go/issues/9606
 	if goos == "windows" {
 		err := resetReadOnlyFlagAll(path)
 		if err != nil {
