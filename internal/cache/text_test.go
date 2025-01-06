@@ -16,7 +16,7 @@ func TestTextCacheGet(t *testing.T) {
 	assert.Equal(t, float32(0), base)
 
 	SetFontMetrics("hi", 10, fyne.TextStyle{}, nil, fyne.NewSize(10, 10), 8)
-	assert.Len(t, fontSizeCache, 1)
+	assert.Equal(t, 1, fontSizeCache.Len())
 
 	bound, base = GetFontMetrics("hi", 10, fyne.TextStyle{}, nil)
 	assert.Equal(t, fyne.NewSize(10, 10), bound)
