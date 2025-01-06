@@ -11,6 +11,7 @@ import (
 	"fyne.io/fyne/v2/theme"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestFormSize(t *testing.T) {
@@ -377,7 +378,7 @@ func TestForm_Validate(t *testing.T) {
 
 	entry2.SetText("not-wrong")
 	err = form.Validate()
-	assert.NoError(t, err)
+	require.NoError(t, err)
 
 }
 
@@ -399,11 +400,11 @@ func TestForm_SetOnValidationChanged(t *testing.T) {
 	form.CreateRenderer()
 
 	entry1.SetText("incorrect")
-	assert.Error(t, form.Validate())
+	require.Error(t, form.Validate())
 	assert.True(t, validationError)
 
 	entry1.SetText("15-true")
-	assert.NoError(t, form.Validate())
+	require.NoError(t, form.Validate())
 	assert.False(t, validationError)
 
 }
