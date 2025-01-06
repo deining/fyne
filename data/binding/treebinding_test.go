@@ -28,13 +28,13 @@ func TestTreeBase_GetItem(t *testing.T) {
 	assert.Len(t, data.items, 1)
 
 	item, err := data.GetItem("f")
-	assert.Nil(t, err)
+	assert.NoError(t, err)
 	val, err := item.(Float).Get()
-	assert.Nil(t, err)
+	assert.NoError(t, err)
 	assert.Equal(t, f, val)
 
 	_, err = data.GetItem("g")
-	assert.NotNil(t, err)
+	assert.Error(t, err)
 }
 
 func TestListBase_IDs(t *testing.T) {

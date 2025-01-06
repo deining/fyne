@@ -13,14 +13,14 @@ func TestBindStringTree(t *testing.T) {
 
 	assert.Len(t, f.ChildIDs(DataTreeRootID), 3)
 	v, err := f.GetValue("5")
-	assert.Nil(t, err)
+	assert.NoError(t, err)
 	assert.Equal(t, "five", v)
 
 	assert.NotNil(t, f.(*boundStringTree).val)
 	assert.Len(t, *(f.(*boundStringTree).val), 3)
 
 	_, err = f.GetValue("nan")
-	assert.NotNil(t, err)
+	assert.Error(t, err)
 }
 
 func TestExternalFloatTree_Reload(t *testing.T) {
@@ -30,7 +30,7 @@ func TestExternalFloatTree_Reload(t *testing.T) {
 
 	assert.Len(t, f.ChildIDs(""), 2)
 	v, err := f.GetValue("2")
-	assert.Nil(t, err)
+	assert.NoError(t, err)
 	assert.Equal(t, 5.0, v)
 
 	calledTree, calledChild := false, false
@@ -40,7 +40,7 @@ func TestExternalFloatTree_Reload(t *testing.T) {
 	assert.True(t, calledTree)
 
 	child, err := f.GetItem("2")
-	assert.Nil(t, err)
+	assert.NoError(t, err)
 	child.AddListener(NewDataListener(func() {
 		calledChild = true
 	}))
@@ -50,13 +50,13 @@ func TestExternalFloatTree_Reload(t *testing.T) {
 	assert.Len(t, *(f.(*boundFloatTree).val), 3)
 
 	_, err = f.GetValue("-1")
-	assert.NotNil(t, err)
+	assert.Error(t, err)
 
 	calledTree, calledChild = false, false
 	m["2"] = 4.8
 	f.Reload()
 	v, err = f.GetValue("2")
-	assert.Nil(t, err)
+	assert.NoError(t, err)
 	assert.Equal(t, 4.8, v)
 	assert.False(t, calledTree)
 	assert.True(t, calledChild)
@@ -65,7 +65,7 @@ func TestExternalFloatTree_Reload(t *testing.T) {
 	m = map[string]float64{"1": 1.0, "2": 4.2}
 	f.Reload()
 	v, err = f.GetValue("2")
-	assert.Nil(t, err)
+	assert.NoError(t, err)
 	assert.Equal(t, 4.2, v)
 	assert.True(t, calledTree)
 	assert.True(t, calledChild)
@@ -74,7 +74,7 @@ func TestExternalFloatTree_Reload(t *testing.T) {
 	m = map[string]float64{"1": 1.0, "2": 4.2, "3": 5.3}
 	f.Reload()
 	v, err = f.GetValue("2")
-	assert.Nil(t, err)
+	assert.NoError(t, err)
 	assert.Equal(t, 4.2, v)
 	assert.True(t, calledTree)
 	assert.False(t, calledChild)
@@ -85,7 +85,7 @@ func TestNewStringTree(t *testing.T) {
 	assert.Len(t, f.ChildIDs(DataTreeRootID), 0)
 
 	_, err := f.GetValue("NaN")
-	assert.NotNil(t, err)
+	assert.Error(t, err)
 }
 
 func TestStringTree_Append(t *testing.T) {
@@ -100,21 +100,21 @@ func TestStringTree_GetValue(t *testing.T) {
 	f := NewStringTree()
 
 	err := f.Append(DataTreeRootID, "1", "1.3")
-	assert.Nil(t, err)
+	assert.NoError(t, err)
 	v, err := f.GetValue("1")
-	assert.Nil(t, err)
+	assert.NoError(t, err)
 	assert.Equal(t, "1.3", v)
 
 	err = f.Append(DataTreeRootID, "fraction", "0.2")
-	assert.Nil(t, err)
+	assert.NoError(t, err)
 	v, err = f.GetValue("fraction")
-	assert.Nil(t, err)
+	assert.NoError(t, err)
 	assert.Equal(t, "0.2", v)
 
 	err = f.SetValue("1", "0.5")
-	assert.Nil(t, err)
+	assert.NoError(t, err)
 	v, err = f.GetValue("1")
-	assert.Nil(t, err)
+	assert.NoError(t, err)
 	assert.Equal(t, "0.5", v)
 }
 
@@ -136,41 +136,41 @@ func TestFloatTree_Set(t *testing.T) {
 	m := map[string]float64{"1": 1.0, "2": 5.0, "3": 2.3}
 	f := BindFloatTree(&ids, &m)
 	i, err := f.GetItem("2")
-	assert.Nil(t, err)
+	assert.NoError(t, err)
 	data := i.(Float)
 
 	assert.Len(t, f.ChildIDs(""), 2)
 	v, err := f.GetValue("2")
-	assert.Nil(t, err)
+	assert.NoError(t, err)
 	assert.Equal(t, 5.0, v)
 	v, err = data.Get()
-	assert.Nil(t, err)
+	assert.NoError(t, err)
 	assert.Equal(t, 5.0, v)
 
 	ids = map[string][]string{"": {"1", "2"}, "1": {"3", "4"}}
 	m = map[string]float64{"1": 1.2, "2": 5.2, "3": 2.2, "4": 4.2}
 	err = f.Set(ids, m)
-	assert.Nil(t, err)
+	assert.NoError(t, err)
 
 	assert.Len(t, f.ChildIDs("1"), 2)
 	v, err = f.GetValue("2")
-	assert.Nil(t, err)
+	assert.NoError(t, err)
 	assert.Equal(t, 5.2, v)
 	v, err = data.Get()
-	assert.Nil(t, err)
+	assert.NoError(t, err)
 	assert.Equal(t, 5.2, v)
 
 	ids = map[string][]string{"": {"1", "2"}}
 	m = map[string]float64{"1": 1.3, "2": 5.3}
 	err = f.Set(ids, m)
-	assert.Nil(t, err)
+	assert.NoError(t, err)
 
 	assert.Len(t, f.ChildIDs(""), 2)
 	v, err = f.GetValue("1")
-	assert.Nil(t, err)
+	assert.NoError(t, err)
 	assert.Equal(t, 1.3, v)
 	v, err = data.Get()
-	assert.Nil(t, err)
+	assert.NoError(t, err)
 	assert.Equal(t, 5.3, v)
 }
 
