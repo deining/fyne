@@ -16,7 +16,7 @@ func TestBindFloatList(t *testing.T) {
 	assert.Equal(t, 5.0, v)
 
 	assert.NotNil(t, f.(*boundFloatList).val)
-	assert.Equal(t, 3, len(*(f.(*boundFloatList).val)))
+	assert.Len(t, *(f.(*boundFloatList).val), 3)
 
 	_, err = f.GetValue(-1)
 	assert.NotNil(t, err)
@@ -45,7 +45,7 @@ func TestExternalFloatList_Reload(t *testing.T) {
 	assert.True(t, calledChild)
 
 	assert.NotNil(t, f.(*boundFloatList).val)
-	assert.Equal(t, 3, len(*(f.(*boundFloatList).val)))
+	assert.Len(t, *(f.(*boundFloatList).val), 3)
 
 	_, err = f.GetValue(-1)
 	assert.NotNil(t, err)

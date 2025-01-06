@@ -29,7 +29,7 @@ func TestListBase_GetItem(t *testing.T) {
 	data := &simpleList{}
 	f := 0.5
 	data.appendItem(BindFloat(&f))
-	assert.Equal(t, 1, len(data.items))
+	assert.Len(t, data.items, 1)
 
 	item, err := data.GetItem(0)
 	assert.Nil(t, err)

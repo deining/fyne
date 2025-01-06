@@ -25,7 +25,7 @@ func TestTreeBase_GetItem(t *testing.T) {
 	data := newSimpleTree()
 	f := 0.5
 	data.appendItem(BindFloat(&f), "f", "")
-	assert.Equal(t, 1, len(data.items))
+	assert.Len(t, data.items, 1)
 
 	item, err := data.GetItem("f")
 	assert.Nil(t, err)
@@ -39,10 +39,10 @@ func TestTreeBase_GetItem(t *testing.T) {
 
 func TestListBase_IDs(t *testing.T) {
 	data := newSimpleTree()
-	assert.Equal(t, 0, len(data.ChildIDs("")))
+	assert.Len(t, data.ChildIDs(""), 0)
 
 	data.appendItem(NewFloat(), "1", "")
-	assert.Equal(t, 1, len(data.ChildIDs("")))
+	assert.Len(t, data.ChildIDs(""), 1)
 	assert.Equal(t, "1", data.ChildIDs("")[0])
 }
 
