@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestTreeBase_AddListener(t *testing.T) {
@@ -28,9 +29,9 @@ func TestTreeBase_GetItem(t *testing.T) {
 	assert.Len(t, data.items, 1)
 
 	item, err := data.GetItem("f")
-	assert.NoError(t, err)
+	require.NoError(t, err)
 	val, err := item.(Float).Get()
-	assert.NoError(t, err)
+	require.NoError(t, err)
 	assert.Equal(t, f, val)
 
 	_, err = data.GetItem("g")

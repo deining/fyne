@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 type simpleList struct {
@@ -32,9 +33,9 @@ func TestListBase_GetItem(t *testing.T) {
 	assert.Len(t, data.items, 1)
 
 	item, err := data.GetItem(0)
-	assert.NoError(t, err)
+	require.NoError(t, err)
 	val, err := item.(Float).Get()
-	assert.NoError(t, err)
+	require.NoError(t, err)
 	assert.Equal(t, f, val)
 
 	_, err = data.GetItem(5)
