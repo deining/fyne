@@ -40,7 +40,7 @@ func TestTreeBase_GetItem(t *testing.T) {
 
 func TestListBase_IDs(t *testing.T) {
 	data := newSimpleTree()
-	assert.Len(t, data.ChildIDs(""), 0)
+	assert.Empty(t, data.ChildIDs(""))
 
 	data.appendItem(NewFloat(), "1", "")
 	assert.Len(t, data.ChildIDs(""), 1)
